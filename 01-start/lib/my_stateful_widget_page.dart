@@ -13,6 +13,30 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _counter = 0;
 
+  @override
+  void initState() {
+    super.initState();
+    debugPrint("widget-initState");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    debugPrint("widget-didChangeDependecies");
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    debugPrint("widget-setState");
+  }
+
+  @override
+  void dispose() {
+    debugPrint("dispose");
+    super.dispose();
+  }
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -30,6 +54,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("widget-build");
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
