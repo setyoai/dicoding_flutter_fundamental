@@ -23,6 +23,7 @@ class HomeScreen extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 NavigationRoute.detailRoute.name,
+                arguments: restaurant,
               );
             },
           );
