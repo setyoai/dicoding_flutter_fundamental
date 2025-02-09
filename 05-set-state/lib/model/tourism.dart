@@ -21,7 +21,6 @@ class Tourism {
 }
 
 // todo-01-init-01: create a variable that contain a bookmark list
-List<Tourism> bookmarkTourismList = [];
 
 final List<Tourism> tourismList = [
   Tourism(
