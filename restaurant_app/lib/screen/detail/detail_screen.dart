@@ -12,84 +12,160 @@ class DetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.network(
-              restaurant.image,
-              fit: BoxFit.cover,
-            ),
-            const SizedBox(height: 20),
-            Text(
-              restaurant.name,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              restaurant.city,
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              restaurant.description,
-              style: TextStyle(
-                fontSize: 16,
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              "Food",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            SizedBox(
-              height: 200, // Tetapkan tinggi agar ListView dapat ditampilkan
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final Restaurant restaurant = restaurantList[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(5),
-                    child: Card(
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
-                              child: Image.network(
-                                restaurant.image,
-                                fit: BoxFit.cover,
-                                width: 120,
-                                height: 100,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                restaurant.name,
-                                style: const TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ],
-                        ),
-                    ),
-                  );
-                },
-                itemCount: restaurantList.length,
-              ),
-            ),
-          ],
+        appBar: AppBar(
+          title: Text(restaurant.name),
         ),
-      ),
-    ));
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                Image.network(
+                  restaurant.image,
+                  fit: BoxFit.fill,
+                ),
+                const SizedBox.square(dimension: 16.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    restaurant.name,
+                    style: Theme.of(context).textTheme.headlineMedium,
+                  ),
+                ),
+                const SizedBox.square(dimension: 8.0),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.location_on_outlined),
+                    const SizedBox.square(dimension: 4),
+                    Text(
+                      restaurant.city,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+                const SizedBox.square(dimension: 8.0),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Icon(Icons.star_outline_outlined),
+                    const SizedBox.square(dimension: 4),
+                    Text(
+                      restaurant.rating,
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+                const SizedBox.square(dimension: 32.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Description",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                const SizedBox.square(dimension: 8.0),
+                Text(
+                  restaurant.description,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                const SizedBox.square(dimension: 32),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Menu",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                ),
+                 const SizedBox.square(dimension: 8.0),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Food : ",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                SizedBox(
+                  height:
+                      80, 
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final Restaurant restaurant = restaurantList[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  restaurant.name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: restaurantList.length,
+                  ),
+                ),
+                 const SizedBox.square(dimension: 16),
+                 Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Drinks",
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                ),
+                SizedBox(
+                  height:
+                      80, 
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      final Restaurant restaurant = restaurantList[index];
+                      return Padding(
+                        padding: const EdgeInsets.all(5),
+                        child: Card(
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  restaurant.name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: restaurantList.length,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 }
