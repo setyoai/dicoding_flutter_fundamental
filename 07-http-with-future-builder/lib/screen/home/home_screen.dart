@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:tourism_app/data/api/api_services.dart';
-import 'package:tourism_app/data/model/tourism_list_response.dart';
+import 'package:provider/provider.dart';
+import 'package:tourism_app/provider/home/tourism_list_provider.dart';
 import 'package:tourism_app/screen/home/tourism_card_widget.dart';
 import 'package:tourism_app/static/navigation_route.dart';
+import 'package:tourism_app/static/tourism_list_result_state.dart';
 
-// todo-03-home-01: make this widget StatefulWidget
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -13,14 +13,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // todo-03-home-02: add a local state that containt a Future
-  late final Future<TourismListResponse> _futureTourismResponse;
+   // todo-02-home-13: we dont need this anymore
+  // late Future<TourismListResponse> _futureTourismResponse;
 
-  // todo-03-home-03: initialize a state from initState function
   @override
   void initState() {
     super.initState();
-    _futureTourismResponse = ApiServices().getTourismList();
+    // todo-02-home-13: we dont need this anymore
+    // _futureTourismResponse = ApiServices().getTourismList();
+    // todo-02-home-09: load the api using Provider
+    Future.microtask(() {
+      context.read<TourismListProvider>().fetchTourismList();
+    });
   }
 
   @override
@@ -29,30 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: const Text("Tourism List"),
       ),
-      // todo-03-home-04: comment the ListView widget first, we take it later
-      // todo-03-home-05: create a FutureBuilder
-      body: FutureBuilder(
-        future: _futureTourismResponse,
-        builder: (context, snapshot) {
+      // todo-02-home-10: comment this code below
+      // todo-02-home-11: add a Consumer to maintain the result state
+      body: Consumer<TourismListProvider>(
+        builder: (context, value, child) {
           // todo-03-home-06: define a widget based on state
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return const Center(
+          return switch (value.resultState) {
+            TourismListLoadingState() => const Center(
                 child: CircularProgressIndicator(),
-              );
-            case ConnectionState.done:
-              // todo-03-home-07: define a widget base on error or has data
-              if (snapshot.hasError) {
-                return Center(
-                  child: Text(snapshot.error.toString()),
-                );
-              }
-
-              final listOfTourism = snapshot.data!.places;
-              return ListView.builder(
-                itemCount: listOfTourism.length,
+              ),
+            TourismListLoadedState(data: var tourismList) => ListView.builder(
+                itemCount: tourismList.length,
                 itemBuilder: (context, index) {
-                  final tourism = listOfTourism[index];
+                  final tourism = tourismList[index];
 
                   return TourismCard(
                     tourism: tourism,
@@ -60,16 +53,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pushNamed(
                         context,
                         NavigationRoute.detailRoute.name,
-                        // todo-04-detail-13: dont forget to change the value too
                         arguments: tourism.id,
                       );
                     },
                   );
                 },
-              );
-            default:
-              return const SizedBox();
-          }
+              ),
+            TourismListErrorState(error: var message) => Center(
+                child: Text(message),
+              ),
+            _ => const SizedBox(),
+          };
         },
       ),
     );
