@@ -1,171 +1,52 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/model/restaurant.dart';
+import 'package:provider/provider.dart';
+import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:restaurant_app/screen/detail/body_of_detail_screen_widget.dart';
+import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
 
-class DetailScreen extends StatelessWidget {
-  final Restaurant restaurant;
+class DetailScreen extends StatefulWidget {
+  final String id;
 
   const DetailScreen({
     super.key,
-    required this.restaurant,
+    required this.id,
   });
+
+  @override
+  State<DetailScreen> createState() => _DetailScreenState();
+}
+
+class _DetailScreenState extends State<DetailScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<RestaurantDetailProvider>().fetchRestaurantDetail(widget.id);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(restaurant.name),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Image.network(
-                  restaurant.image,
-                  fit: BoxFit.fill,
-                ),
-                const SizedBox.square(dimension: 16.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    restaurant.name,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ),
-                const SizedBox.square(dimension: 8.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.location_on_outlined),
-                    const SizedBox.square(dimension: 4),
-                    Text(
-                      restaurant.city,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                const SizedBox.square(dimension: 8.0),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Icon(Icons.star_outline_outlined),
-                    const SizedBox.square(dimension: 4),
-                    Text(
-                      restaurant.rating,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                  ],
-                ),
-                const SizedBox.square(dimension: 32.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Description",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                const SizedBox.square(dimension: 8.0),
-                Text(
-                  restaurant.description,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox.square(dimension: 32),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Menu",
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                ),
-                 const SizedBox.square(dimension: 8.0),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Food : ",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                SizedBox(
-                  height:
-                      80, 
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final Restaurant restaurant = restaurantList[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  restaurant.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: restaurantList.length,
-                  ),
-                ),
-                 const SizedBox.square(dimension: 16),
-                 Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Drinks",
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-                SizedBox(
-                  height:
-                      80, 
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) {
-                      final Restaurant restaurant = restaurantList[index];
-                      return Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  restaurant.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                    itemCount: restaurantList.length,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title: const Text("Restaurant Detail"),
+      ),
+      body: Consumer<RestaurantDetailProvider>(
+        builder: (context, value, chlid) {
+          return switch (value.resultState) {
+            RestaurantDetailLoadingState() => const Center(
+                child: CircularProgressIndicator(),
+              ),
+            RestaurantDetailLoadedState(data: var restaurant) =>
+              BodyOfDetailScreenWidget(restaurant: restaurant),
+            RestaurantDetailErrorState(error: var message) => Center(
+                child: Text(message),
+              ),
+            _ => const SizedBox(),
+          };
+        },
+      ),
+    );
   }
 }

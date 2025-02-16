@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/model/restaurant.dart';
+import 'package:restaurant_app/data/model/restaurant.dart';
 
 class RestaurantCardWidget extends StatelessWidget {
   final Restaurant restaurant;
@@ -34,12 +34,12 @@ class RestaurantCardWidget extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  restaurant.image,
+                  'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
-                      width: 100,
-                      height: 100,
+                      width: 120,
+                      height: 80,
                       color: Colors.grey[300],
                       child: const Icon(Icons.broken_image, size: 40),
                     );
@@ -67,8 +67,7 @@ class RestaurantCardWidget extends StatelessWidget {
                       const Icon(Icons.star, color: Colors.amber, size: 16),
                       const SizedBox.square(dimension: 4),
                       Text(
-                        restaurant.rating
-                            .toString(), 
+                        restaurant.rating.toString(),
                         style: const TextStyle(fontSize: 14),
                       ),
                     ],
