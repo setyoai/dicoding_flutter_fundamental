@@ -1,12 +1,12 @@
 class Restaurant {
-  final String id;
-  final String name;
-  final String description;
-  final String pictureId;
-  final String city;
-  final double rating;
+  String id;
+  String name;
+  String description;
+  String city;
+  String pictureId;
   List<Category> categories;
   Menus menus;
+  double rating;
 
   Restaurant({
     required this.id,
@@ -27,9 +27,13 @@ class Restaurant {
       pictureId: json['pictureId'],
       city: json['city'],
       rating: json["rating"]?.toDouble(),
-      categories: List<Category>.from(
-          json["categories"].map((x) => Category.fromJson(x))),
-      menus: Menus.fromJson(json["menus"]),
+      categories: json["categories"] != null
+          ? List<Category>.from(
+              json["categories"].map((x) => Category.fromJson(x)))
+          : [],
+      menus: json["menus"] != null
+          ? Menus.fromJson(json["menus"])
+          : Menus(foods: [], drinks: []),
     );
   }
 }
