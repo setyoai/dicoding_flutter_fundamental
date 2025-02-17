@@ -17,7 +17,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
         child: Column(
           children: [
             Image.network(
-              'https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}',
+              'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
               fit: BoxFit.cover,
             ),
             const SizedBox.square(dimension: 16.0),
@@ -120,7 +120,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                "Drinks",
+                "Drinks :",
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
