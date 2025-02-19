@@ -4,6 +4,7 @@ class Restaurant {
   String description;
   String city;
   String pictureId;
+  String address;
   List<Category> categories;
   Menus menus;
   double rating;
@@ -14,6 +15,7 @@ class Restaurant {
     required this.description,
     required this.pictureId,
     required this.city,
+    required this.address,
     required this.rating,
     required this.menus,
     required this.categories,
@@ -26,6 +28,7 @@ class Restaurant {
       description: json['description'],
       pictureId: json['pictureId'],
       city: json['city'],
+      address: json['address'] ?? '',
       rating: json["rating"]?.toDouble(),
       categories: json["categories"] != null
           ? List<Category>.from(

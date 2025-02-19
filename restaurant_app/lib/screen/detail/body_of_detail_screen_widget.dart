@@ -52,6 +52,17 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                 ),
               ],
             ),
+             const SizedBox.square(dimension: 8.0),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                const SizedBox.square(dimension: 4),
+                Text(
+                  restaurant.address,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
             const SizedBox.square(dimension: 32.0),
             Align(
               alignment: Alignment.centerLeft,

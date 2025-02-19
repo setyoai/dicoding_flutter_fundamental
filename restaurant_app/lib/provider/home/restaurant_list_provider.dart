@@ -28,7 +28,8 @@ class RestaurantListProvider extends ChangeNotifier{
         notifyListeners();
       }
     } on Exception catch (e) {
-      _resultState = RestaurantListErrorState(e.toString());
+      String errorMessage = e.toString().replaceFirst('Exception: ', '');
+      _resultState = RestaurantListErrorState(errorMessage);
       notifyListeners();
     }
   }
