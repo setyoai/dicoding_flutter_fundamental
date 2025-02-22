@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences_app/model/setting.dart';
+import 'package:shared_preferences_app/providers/notification_state_provider.dart';
+import 'package:shared_preferences_app/providers/shared_preferences_provider.dart';
+import 'package:shared_preferences_app/utils/notification_state.dart';
+import 'package:shared_preferences_app/utils/page_size_number.dart';
 import 'package:shared_preferences_app/widgets/maximum_page_size_field.dart';
 import 'package:shared_preferences_app/widgets/notification_field.dart';
 import 'package:shared_preferences_app/widgets/save_button.dart';
@@ -22,6 +28,53 @@ class _SettingPageState extends State<SettingPage> {
     maximumPageSizeController.dispose();
     signatureController.dispose();
     super.dispose();
+  }
+
+  void saveAction() async {
+    final notificationState =
+        context.read<NotificationStateProvider>().notificationState;
+    final isNotificationEnable = notificationState.isEnable;
+    final maximumPageSize = int.tryParse(maximumPageSizeController.text) ??
+        maximumPageSizeNumbers.first;
+    final signature = signatureController.text;
+    final Setting setting = Setting(
+      notificationEnable: isNotificationEnable,
+      pageNumber: maximumPageSize,
+      signature: signature,
+    );
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+    final sharedPreferencesProvider = context.read<SharedPreferencesProvider>();
+    await sharedPreferencesProvider.saveSettingValue(setting);
+
+    scaffoldMessenger.showSnackBar(
+      SnackBar(
+        content: Text(sharedPreferencesProvider.message),
+      ),
+    );
+
+    @override
+    void initState() {
+      super.initState();
+
+      final sharedPreferencesProvider =
+          context.read<SharedPreferencesProvider>();
+      final notificationSteteProvider =
+          context.read<NotificationStateProvider>();
+
+      Future.microtask(() {
+        sharedPreferencesProvider.getSettingValue();
+        final setting = sharedPreferencesProvider.setting;
+
+        if (setting != null) {
+          maximumPageSizeController.text = setting.pageNumber.toString();
+          signatureController.text = setting.signature;
+          notificationSteteProvider.notificationState = setting.notificationEnable
+              ? NotificationState.enable
+              : NotificationState.disable;
+        }
+      });
+    }
   }
 
   @override
@@ -53,6 +106,4 @@ class _SettingPageState extends State<SettingPage> {
       ),
     );
   }
-
-  void saveAction() {}
 }
