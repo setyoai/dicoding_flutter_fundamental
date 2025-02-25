@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
-import 'package:restaurant_app/screen/detail/body_of_detail_screen_widget.dart';
+import 'package:restaurant_app/widget/body_of_detail_screen_widget.dart';
 import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
 
 class DetailScreen extends StatefulWidget {
@@ -21,7 +21,7 @@ class _DetailScreenState extends State<DetailScreen> {
   void initState() {
     super.initState();
 
-    Future.microtask(() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<RestaurantDetailProvider>().fetchRestaurantDetail(widget.id);
     });
   }

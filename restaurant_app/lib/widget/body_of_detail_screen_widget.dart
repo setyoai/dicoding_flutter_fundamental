@@ -52,7 +52,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                 ),
               ],
             ),
-             const SizedBox.square(dimension: 8.0),
+            const SizedBox.square(dimension: 8.0),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
