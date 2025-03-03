@@ -1,0 +1,28 @@
+{
+  "buildFiles": [
+    "/home/setyo/Tools/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/home/setyo/Android/Sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/home/setyo/bahasa_pemrograman/flutter/dicoding_flutter_fundamental/restaurant_app/android/app/.cxx/Debug/1kc562dv/x86",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/home/setyo/Android/Sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/home/setyo/bahasa_pemrograman/flutter/dicoding_flutter_fundamental/restaurant_app/android/app/.cxx/Debug/1kc562dv/x86",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {},
+  "toolchains": {
+    "toolchain": {
+      "cCompilerExecutable": "/home/setyo/Android/Sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/bin/clang.lld",
+      "cppCompilerExecutable": "/home/setyo/Android/Sdk/ndk/26.3.11579264/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++.lld"
+    }
+  },
+  "cFileExtensions": [],
+  "cppFileExtensions": []
+}

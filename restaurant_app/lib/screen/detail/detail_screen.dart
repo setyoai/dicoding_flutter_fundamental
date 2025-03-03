@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/provider/detail/restaurant_detail_provider.dart';
+import 'package:restaurant_app/provider/favorite/favorite_icon_provider.dart';
 import 'package:restaurant_app/widget/body_of_detail_screen_widget.dart';
 import 'package:restaurant_app/static/restaurant_detail_result_state.dart';
+import 'package:restaurant_app/widget/favorite_icon_widget.dart';
 
 class DetailScreen extends StatefulWidget {
   final String id;
@@ -31,9 +33,26 @@ class _DetailScreenState extends State<DetailScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Restaurant Detail"),
+        actions: [
+          ChangeNotifierProvider(
+            create: (context) => FavoriteIconProvider(),
+            child: Consumer<RestaurantDetailProvider>(
+                builder: (context, value, child) {
+              return switch (value.resultState) {
+                RestaurantDetailLoadedState(data: var restaurant) => Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FavoriteIconWidget(restaurant: restaurant),
+                    ],
+                  ),
+                _ => SizedBox()
+              };
+            }),
+          ),
+        ],
       ),
       body: Consumer<RestaurantDetailProvider>(
-        builder: (context, value, chlid) {
+        builder: (context, value, child) {
           return switch (value.resultState) {
             RestaurantDetailLoadingState() => const Center(
                 child: CircularProgressIndicator(),

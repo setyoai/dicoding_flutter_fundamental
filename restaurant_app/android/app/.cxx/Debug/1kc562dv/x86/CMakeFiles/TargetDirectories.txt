@@ -1,0 +1,2 @@
+/home/setyo/bahasa_pemrograman/flutter/dicoding_flutter_fundamental/restaurant_app/android/app/.cxx/Debug/1kc562dv/x86/CMakeFiles/edit_cache.dir
+/home/setyo/bahasa_pemrograman/flutter/dicoding_flutter_fundamental/restaurant_app/android/app/.cxx/Debug/1kc562dv/x86/CMakeFiles/rebuild_cache.dir

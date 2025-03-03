@@ -1,0 +1,1 @@
+/home/setyo/bahasa_pemrograman/flutter/dicoding_flutter_fundamental/restaurant_app/build/app/intermediates/cxx/Debug/1kc562dv/obj/x86_64
