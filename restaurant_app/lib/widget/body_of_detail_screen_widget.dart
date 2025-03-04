@@ -58,7 +58,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               children: [
                 const SizedBox.square(dimension: 4),
                 Text(
-                  restaurant.address,
+                  restaurant.address ?? 'No address available',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -99,7 +99,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
-                  final foods = restaurant.menus.foods[index];
+                  final foods = restaurant.menus?.foods[index];
                   return Padding(
                     padding: const EdgeInsets.all(1),
                     child: Card(
@@ -114,7 +114,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              foods.name,
+                              foods!.name,
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -124,7 +124,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                     ),
                   );
                 },
-                itemCount: restaurant.menus.foods.length,
+                itemCount: restaurant.menus?.foods.length,
               ),
             ),
             const SizedBox.square(dimension: 8.0),
@@ -140,7 +140,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) {
-                    final drinks = restaurant.menus.drinks[index];
+                    final drinks = restaurant.menus?.drinks[index];
                     return Padding(
                       padding: const EdgeInsets.all(1),
                       child: Card(
@@ -155,7 +155,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                drinks.name,
+                                drinks!.name,
                                 style: const TextStyle(
                                     fontWeight: FontWeight.bold),
                               ),
@@ -165,7 +165,7 @@ class BodyOfDetailScreenWidget extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: restaurant.menus.drinks.length),
+                  itemCount: restaurant.menus?.drinks.length),
             ),
           ],
         ),
