@@ -1,6 +1,6 @@
 name: restaurant_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -13,7 +13,10 @@ dependencies:
   http: ^1.2.0
   shared_preferences: ^2.5.2
   sqflite: ^2.4.2
-  
+  flutter_local_notifications: ^18.0.1
+  flutter_timezone: ^4.1.0
+  timezone: ^0.10.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -25,7 +28,7 @@ flutter:
   uses-material-design: true
   fonts:
     - family: Overpass
-      fonts: 
+      fonts:
         - asset: assets/fonts/Overpass-Bold.ttf
           weight: 700
         - asset: assets/fonts/Overpass-SemiBold.ttf
@@ -40,4 +43,3 @@ flutter:
           weight: 200
         - asset: assets/fonts/Overpass-Thin.ttf
           weight: 100
-

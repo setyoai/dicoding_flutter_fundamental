@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/provider/theme_provider.dart';
+import 'package:restaurant_app/provider/local_notification_provider.dart';
 import 'package:provider/provider.dart';
 
-class ThemeField extends StatelessWidget {
-  const ThemeField({super.key});
+class NotificationField extends StatelessWidget {
+  const NotificationField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final localNotificationProvider =
+        Provider.of<LocalNotificationProvider>(context);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -17,16 +18,16 @@ class ThemeField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Dark Theme',
+                'Daily Reminder',
                 style: TextStyle(
                   fontSize: 16,
-                   fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
               Switch(
-                value: themeProvider.isDarkMode,
+                value: localNotificationProvider.isReminderMode,
                 onChanged: (value) {
-                  themeProvider.toggleTheme(value);
+                  localNotificationProvider.toggleReminder(value);
                 },
               ),
             ],
